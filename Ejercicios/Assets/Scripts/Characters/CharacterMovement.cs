@@ -20,7 +20,9 @@ public class CharacterMovement : MonoBehaviour
 
     [Range(0, 1000)]
     [SerializeField] private float jumpForce = 10;
-    
+
+    [SerializeField] private float jumpBufferTime;
+
     private bool _isJumpInput;
 
     private void OnValidate()
@@ -44,6 +46,8 @@ public class CharacterMovement : MonoBehaviour
             rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             _isJumpInput = false;
         }
+
+        rigidBody.velocity = _currentMovement * speed + Vector3.up * rigidBody.velocity.y;
     }
 
     public void OnMove(InputValue input)
@@ -51,10 +55,11 @@ public class CharacterMovement : MonoBehaviour
         var movement = input.Get<Vector2>();
         _currentMovement = new Vector3(movement.x, _currentMovement.y, movement.y);
     }
-
+     
     public void OnJump()
     {
         _isJumpInput = true;
+        Invoke(nameof(CancelJumpInput), jumpBufferTime);
     }
 
     private void OnSprint(InputValue input)
@@ -63,8 +68,14 @@ public class CharacterMovement : MonoBehaviour
          
     }
 
+    private void CancelJumpInput()
+    {
+        _isJumpInput = false;
+    }
+
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(feetPivot.position, feetPivot.position + Vector3.down * minJumpDistance);
     }
 }
