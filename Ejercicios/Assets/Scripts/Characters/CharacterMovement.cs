@@ -21,33 +21,31 @@ public class CharacterMovement : MonoBehaviour
     [Range(0, 1000)]
     [SerializeField] private float jumpForce = 10;
 
-    [SerializeField] private float jumpBufferTime;
+    //[SerializeField] private float jumpBufferTime;
+    private Coroutine _jumpCoruotine;
+    [SerializeField] private float bufferTime;
 
-    private bool _isJumpInput;
+
+    //private bool _isJumpInput;
 
     private void OnValidate()
-    {       
+    {
         rigidBody ??= GetComponent<Rigidbody>();
-    }
-
-    private void Update()
-    {          
-        transform.Translate(speed * Time.deltaTime * _currentMovement);
     }
 
     private void FixedUpdate()
     {
-        RaycastHit hit;
+        //    RaycastHit hit;
 
-        if (_isJumpInput 
-            && Physics.Raycast(feetPivot.position, Vector3.down, out hit , MaxDistance)
-            && hit.distance <= minJumpDistance)
-        {
-            rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            _isJumpInput = false;
-        }
+        //    if (_isJumpInput 
+        //        && Physics.Raycast(feetPivot.position, Vector3.down, out hit , MaxDistance)
+        //        && hit.distance <= minJumpDistance)
+        //    {
+        //        rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        //        _isJumpInput = false;
+        //    }
 
-        rigidBody.velocity = _currentMovement * speed + Vector3.up * rigidBody.velocity.y;
+        rigidBody.velocity = _currentMovement* speed + Vector3.up* rigidBody.velocity.y;
     }
 
     public void OnMove(InputValue input)
@@ -58,9 +56,17 @@ public class CharacterMovement : MonoBehaviour
      
     public void OnJump()
     {
-        _isJumpInput = true;
-        Invoke(nameof(CancelJumpInput), jumpBufferTime);
+        //_isJumpInput = true;
+        //CancelInvoke(nameof(CancelJumpInput));
+        //Invoke(nameof(CancelJumpInput), jumpBufferTime);
+
+        if (_jumpCoruotine != null) 
+            StopCoroutine(JumpCoroutine(bufferTime));
+
+        _jumpCoruotine = StartCoroutine(JumpCoroutine(bufferTime));
+
     }
+
 
     private void OnSprint(InputValue input)
     {
@@ -68,9 +74,32 @@ public class CharacterMovement : MonoBehaviour
          
     }
 
-    private void CancelJumpInput()
+    //private void CancelJumpInput()
+    //{
+    //    _isJumpInput = false;
+    //}
+
+    private IEnumerator JumpCoroutine(float bufferTime)
     {
-        _isJumpInput = false;
+
+        if (!feetPivot)
+            yield break;
+
+        float timeElapsed = 0;
+        while (timeElapsed <= bufferTime)
+        {           
+            yield return new WaitForFixedUpdate();
+            
+            if (Physics.Raycast(feetPivot.position, Vector3.down, out var hit, MaxDistance)
+            && hit.distance <= minJumpDistance)
+            {
+                rigidBody.velocity = new Vector3(rigidBody.velocity.x, 0, rigidBody.velocity.z);
+                rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                yield break;
+            }
+
+            timeElapsed += Time.fixedDeltaTime;
+        }    
     }
 
     private void OnDrawGizmos()
