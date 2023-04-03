@@ -30,9 +30,27 @@ namespace Inputs
             ""id"": ""99149058-a3e7-4d60-a7d6-ee3b7f62a496"",
             ""actions"": [
                 {
-                    ""name"": ""New action"",
-                    ""type"": ""Button"",
+                    ""name"": ""Vertical"",
+                    ""type"": ""Value"",
                     ""id"": ""7168611d-a05f-4368-b006-6cb365d8d236"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Enter"",
+                    ""type"": ""Button"",
+                    ""id"": ""a9a6b416-ef5a-41ae-ae45-6ed5ac1de277"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""d2bbb5d0-e92c-4d36-9643-59b77fe93faf"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -47,7 +65,106 @@ namespace Inputs
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""New action"",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Arrows"",
+                    ""id"": ""39f3f79c-72c5-42cb-8fdb-ddf69823a59d"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""3a3f1f7d-4906-4b10-a5a1-c52b0d23c6e4"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""85deaf54-a25e-4f42-8739-c1a1664eadd9"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""WS"",
+                    ""id"": ""3c988659-227d-47c3-90fa-02927ee9c9c8"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""07fa0e81-5198-4ed3-826b-cc2e99f8a90e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""68429305-727c-43c2-b83b-f8fb4b39f455"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Vertical"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9aa3be79-2515-4172-8da7-23247c609769"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Enter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""76e09e36-8f98-4c67-8f9b-6de263604339"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae7e58bb-c1c7-46ff-8929-d7feb3340d49"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -225,7 +342,9 @@ namespace Inputs
 }");
             // Menu
             m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
-            m_Menu_Newaction = m_Menu.FindAction("New action", throwIfNotFound: true);
+            m_Menu_Vertical = m_Menu.FindAction("Vertical", throwIfNotFound: true);
+            m_Menu_Enter = m_Menu.FindAction("Enter", throwIfNotFound: true);
+            m_Menu_Exit = m_Menu.FindAction("Exit", throwIfNotFound: true);
             // World
             m_World = asset.FindActionMap("World", throwIfNotFound: true);
             m_World_Move = m_World.FindAction("Move", throwIfNotFound: true);
@@ -290,12 +409,16 @@ namespace Inputs
         // Menu
         private readonly InputActionMap m_Menu;
         private IMenuActions m_MenuActionsCallbackInterface;
-        private readonly InputAction m_Menu_Newaction;
+        private readonly InputAction m_Menu_Vertical;
+        private readonly InputAction m_Menu_Enter;
+        private readonly InputAction m_Menu_Exit;
         public struct MenuActions
         {
             private @PlayerControls m_Wrapper;
             public MenuActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Newaction => m_Wrapper.m_Menu_Newaction;
+            public InputAction @Vertical => m_Wrapper.m_Menu_Vertical;
+            public InputAction @Enter => m_Wrapper.m_Menu_Enter;
+            public InputAction @Exit => m_Wrapper.m_Menu_Exit;
             public InputActionMap Get() { return m_Wrapper.m_Menu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -305,16 +428,28 @@ namespace Inputs
             {
                 if (m_Wrapper.m_MenuActionsCallbackInterface != null)
                 {
-                    @Newaction.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
-                    @Newaction.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
-                    @Newaction.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnNewaction;
+                    @Vertical.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnVertical;
+                    @Vertical.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnVertical;
+                    @Vertical.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnVertical;
+                    @Enter.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnEnter;
+                    @Enter.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnEnter;
+                    @Enter.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnEnter;
+                    @Exit.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnExit;
+                    @Exit.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnExit;
+                    @Exit.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnExit;
                 }
                 m_Wrapper.m_MenuActionsCallbackInterface = instance;
                 if (instance != null)
                 {
-                    @Newaction.started += instance.OnNewaction;
-                    @Newaction.performed += instance.OnNewaction;
-                    @Newaction.canceled += instance.OnNewaction;
+                    @Vertical.started += instance.OnVertical;
+                    @Vertical.performed += instance.OnVertical;
+                    @Vertical.canceled += instance.OnVertical;
+                    @Enter.started += instance.OnEnter;
+                    @Enter.performed += instance.OnEnter;
+                    @Enter.canceled += instance.OnEnter;
+                    @Exit.started += instance.OnExit;
+                    @Exit.performed += instance.OnExit;
+                    @Exit.canceled += instance.OnExit;
                 }
             }
         }
@@ -370,7 +505,9 @@ namespace Inputs
         public WorldActions @World => new WorldActions(this);
         public interface IMenuActions
         {
-            void OnNewaction(InputAction.CallbackContext context);
+            void OnVertical(InputAction.CallbackContext context);
+            void OnEnter(InputAction.CallbackContext context);
+            void OnExit(InputAction.CallbackContext context);
         }
         public interface IWorldActions
         {
