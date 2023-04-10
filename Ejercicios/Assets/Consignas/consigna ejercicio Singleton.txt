@@ -1,0 +1,8 @@
+Se necesita:
+	○ Un debugManager
+		• Que sea Singleton
+		• Que tenga los metodos Log, LogError y LogWarning.
+		• Que tenga los metodos DrawLine y DrawRay.
+		• Todos los metodos "Log" y "Draw" deben recibir por parametro un Tag y deben filtrar en base a una lista de Tags habilitados si el debug debe ser procesado o no.
+		• Metodos para agregar y quitar tags habilitados (ej: AddToWhiteList y RemoveFromWhitelist).
+		• Metodos para habilitar y deshabilitar cada tipo de debug (log, logerror, DrawLine, etc). 
