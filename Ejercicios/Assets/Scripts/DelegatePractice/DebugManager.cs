@@ -4,31 +4,55 @@ using UnityEngine;
 
 public class DebugManager : MonoBehaviourSingleton<DebugManager>
 {
-    // 
-    // 
-    // 
+    [SerializeField] private string[] tags;
+    [SerializeField] private bool log;
+    [SerializeField] private bool logError;
+    [SerializeField] private bool logWarning;
+    [SerializeField] private bool drawLine;
+    [SerializeField] private bool drawRay;
 
-    public void DebugLog(string message, string tag)
+    public void Log(string message, GameObject gameObject)
     {
-        Debug.Log(message);       
+        if (log)
+        for (int i = 0; i < tags.Length; i++)
+        {
+            if (tags[i] == gameObject.tag)
+            {
+                Debug.Log(message);
+            }
+        }        
     }
 
-    public void DebugLogError(string message, string tag)
+    public void LogError(string message, GameObject gameObject)
     {
-        Debug.LogError(message);
+        if (logError)
+            for (int i = 0; i < tags.Length; i++)
+            {
+                if (tags[i] == gameObject.tag)
+                {
+                    Debug.LogError(message);
+                }
+            }
     }
 
-    public void DebugLogWarning(string message, string tag)
+    public void LogWarning(string message, GameObject gameObject)
     {
-        Debug.LogWarning(message);
-    }
+        if (logWarning)
+            for (int i = 0; i < tags.Length; i++)
+            {
+                if (tags[i] == gameObject.tag)
+                {
+                    Debug.LogWarning(message);
+                }
+            }
+    }  
 
-    public void DebugDrawLine(Vector3 start, Vector3 end, Color color, string tag)
+    public void DrawLine(Vector3 start, Vector3 end, Color color, string tag)
     {
         Debug.DrawLine(start, end, color);
     }
 
-    public void DebugDrawRay(Vector3 start, Vector3 dir, Color color, string tag)
+    public void DrawRay(Vector3 start, Vector3 dir, Color color, string tag)
     {
         Debug.DrawRay(start, dir, color);
     }
