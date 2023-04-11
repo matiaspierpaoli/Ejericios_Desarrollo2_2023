@@ -26,6 +26,7 @@ public class DebugManager : MonoBehaviourSingleton<DebugManager>
     public void LogError(string message, GameObject gameObject)
     {
         if (logError)
+        {
             for (int i = 0; i < tags.Length; i++)
             {
                 if (tags[i] == gameObject.tag)
@@ -33,11 +34,13 @@ public class DebugManager : MonoBehaviourSingleton<DebugManager>
                     Debug.LogError(message);
                 }
             }
+        }          
     }
 
     public void LogWarning(string message, GameObject gameObject)
     {
         if (logWarning)
+        {
             for (int i = 0; i < tags.Length; i++)
             {
                 if (tags[i] == gameObject.tag)
@@ -45,17 +48,35 @@ public class DebugManager : MonoBehaviourSingleton<DebugManager>
                     Debug.LogWarning(message);
                 }
             }
+        }
     }  
 
-    public void DrawLine(Vector3 start, Vector3 end, Color color, string tag)
+    public void DrawLine(Vector3 start, Vector3 end, Color color, float duration, GameObject gameObject)
     {
-        Debug.DrawLine(start, end, color);
+        if (drawLine)
+        {
+            for (int i = 0; i < tags.Length; i++)
+            {
+                if (tags[i] == gameObject.tag)
+                {
+                    Debug.DrawLine(start, end, color, duration);
+                }
+            }
+        }     
     }
 
-    public void DrawRay(Vector3 start, Vector3 dir, Color color, string tag)
+    public void DrawRay(Vector3 start, Vector3 dir, Color color, float duration, GameObject gameObject)
     {
-        Debug.DrawRay(start, dir, color);
+        if (drawRay)
+        {
+            for (int i = 0; i < tags.Length; i++)
+            {
+                if (tags[i] == gameObject.tag)
+                {
+                    Debug.DrawRay(start, dir, color, duration);
+                }
+            }
+        }        
     }
-
 
 }

@@ -41,12 +41,18 @@ public class Player : MonoBehaviour
     [ContextMenu("Debug DrawLine")]
     private void DebugDrawLine()
     {
-        // DebugManager.Instance.DebugDrawLine();
+        Vector3 end = new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), 0);
+        Color color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+
+        DebugManager.Instance.DrawLine(this.transform.position, this.transform.position + end, color, 2, gameObject);
     }
 
     [ContextMenu("Debug DrawRay")]
     private void DebugDrawRay()
     {
-        //DebugManager.Instance.DebugDrawRay();
+        Vector3 end = new Vector3(Random.Range(-50, 50), Random.Range(-50, 50), 0);
+        Color color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
+
+        DebugManager.Instance.DrawRay(this.transform.position, this.transform.position + end, color, 2, gameObject);
     }
 }
